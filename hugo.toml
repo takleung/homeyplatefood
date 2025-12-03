@@ -1,0 +1,45 @@
+baseURL = 'https://homeyplatefood.pages.dev/'
+copyright = "© Homey Plate Food"
+defaultContentLanguage = "en"
+disableKinds = ["taxonomy"]
+enableRobotsTXT = true
+languageCode = "en-us"
+timeZone = "America/New_York"
+timeout = "120s"
+title = "Homey Plate Food Gallery"
+theme = "hugo-theme-gallery"
+
+[params]
+  defaultTheme = "dark"
+  description = "A photo gallery for Homey Plate Food"
+  title = "Homey Plate Food Gallery"
+  [params.author]
+    email = "contact@homeyplatefood.com"
+    name = "Homey Plate Food"
+  [params.socialIcons]
+    instagram = "https://www.instagram.com/"
+    email = "mailto:contact@homeyplatefood.com"
+  [params.gallery]
+
+[outputs]
+  home = ["HTML", "RSS"]
+  page = ["HTML"]
+  section = ["HTML"]
+
+[imaging]
+  quality = 75
+  resampleFilter = "CatmullRom"
+  [imaging.exif]
+    disableDate = false
+    disableLatLong = true
+    includeFields = "ImageDescription|Orientation"
+
+[menu]
+  [[menu.footer]]
+    name = "GitHub"
+    url = "https://github.com/"
+    weight = 3
+
+[services]
+  [services.rss]
+    limit = 100

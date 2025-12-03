@@ -1,0 +1,24 @@
+# Hugo default output directory
+/public/
+/resources/_gen/
+
+# Hugo cache directory
+/.hugo_build.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (if using npm)
+node_modules/
+
+# Environment files
+.env
+.env.local
