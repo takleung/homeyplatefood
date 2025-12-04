@@ -1,0 +1,37 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>{{ .Site.Title }}</h3>
+                <p>{{ .Site.Params.description }}</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <div class="footer-social">
+                    {{ with .Site.Params.socialIcons.instagram }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+                    {{ end }}
+                    {{ with .Site.Params.socialIcons.email }}
+                        <a href="{{ . }}" class="footer-link">Email</a>
+                    {{ end }}
+                </div>
+            </div>
+
+            {{ if .Site.Menus.footer }}
+            <div class="footer-section">
+                <h3>Links</h3>
+                <nav class="footer-nav">
+                    {{ range .Site.Menus.footer }}
+                        <a href="{{ .URL }}" class="footer-link">{{ .Name }}</a>
+                    {{ end }}
+                </nav>
+            </div>
+            {{ end }}
+        </div>
+
+        <div class="footer-bottom">
+            <p>{{ .Site.Copyright }} | Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a></p>
+        </div>
+    </div>
+</footer>

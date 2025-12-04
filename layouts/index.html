@@ -1,0 +1,33 @@
+{{ define "main" }}
+<div class="container">
+    <div class="hero">
+        <h1 class="hero-title">{{ .Site.Title }}</h1>
+        <p class="hero-description">{{ .Site.Params.description }}</p>
+    </div>
+
+    <div class="recipe-grid">
+        {{ range .Site.RegularPages }}
+        <article class="recipe-card">
+            <a href="{{ .Permalink }}" class="recipe-link">
+                {{ with .Resources.GetMatch "*.{jpg,jpeg,png,gif,webp}" }}
+                    <div class="recipe-image-wrapper">
+                        <img src="{{ .Permalink }}" alt="{{ $.Title }}" class="recipe-image" loading="lazy">
+                    </div>
+                {{ end }}
+                <div class="recipe-content">
+                    <h2 class="recipe-title">{{ .Title }}</h2>
+                    {{ if .Description }}
+                        <p class="recipe-description">{{ .Description }}</p>
+                    {{ end }}
+                    <div class="recipe-meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}" class="recipe-date">
+                            {{ .Date.Format "January 2, 2006" }}
+                        </time>
+                    </div>
+                </div>
+            </a>
+        </article>
+        {{ end }}
+    </div>
+</div>
+{{ end }}
