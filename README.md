@@ -127,4 +127,4 @@ content/
 
 ## License
 
-This site uses the hugo-theme-gallery theme, which is licensed under the MIT License.
+This site uses the hugo-theme-gallery theme, which is licensed under the MIT License. Ray
