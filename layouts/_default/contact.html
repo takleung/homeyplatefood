@@ -1,0 +1,85 @@
+{{ define "main" }}
+<div class="container">
+    <div class="hero">
+        <h1 class="hero-title">{{ .Title }}</h1>
+        <p class="hero-description">{{ .Description }}</p>
+    </div>
+
+    <div class="content-prose" style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
+        {{ .Content }}
+
+        <div class="contact-form" style="background: #f5f5f5; padding: 2rem; border-radius: 12px; margin-top: 3rem;">
+            <h2 style="margin-top: 0;">Quick Contact Form</h2>
+            <form action="mailto:contact@homeyplatefood.com" method="post" enctype="text/plain">
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Name</label>
+                    <input type="text" id="name" name="name" required
+                           style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem;">
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                    <input type="email" id="email" name="email" required
+                           style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem;">
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="subject" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Subject</label>
+                    <select id="subject" name="subject"
+                            style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem;">
+                        <option value="Recipe Submission">Recipe Submission</option>
+                        <option value="Question">Question</option>
+                        <option value="Feedback">Feedback</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="message" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Message</label>
+                    <textarea id="message" name="message" rows="6" required
+                              style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; resize: vertical;"></textarea>
+                </div>
+
+                <button type="submit"
+                        style="background: #333; color: white; padding: 1rem 2rem; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; font-weight: 600;">
+                    Send Message
+                </button>
+            </form>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                Note: This form will open your email client. Alternatively, email us directly at
+                <a href="mailto:contact@homeyplatefood.com">contact@homeyplatefood.com</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+.content-prose {
+    line-height: 1.8;
+}
+
+.content-prose h1, .content-prose h2, .content-prose h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.content-prose ul, .content-prose ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.content-prose li {
+    margin-bottom: 0.5rem;
+}
+
+.content-prose hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.content-prose strong {
+    font-weight: 600;
+}
+</style>
+{{ end }}

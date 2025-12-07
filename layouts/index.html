@@ -5,29 +5,84 @@
         <p class="hero-description">{{ .Site.Params.description }}</p>
     </div>
 
-    <div class="recipe-grid">
-        {{ range .Site.RegularPages }}
-        <article class="recipe-card">
-            <a href="{{ .Permalink }}" class="recipe-link">
-                {{ with .Resources.GetMatch "*.{jpg,jpeg,png,gif,webp}" }}
-                    <div class="recipe-image-wrapper">
-                        <img src="{{ .Permalink }}" alt="{{ $.Title }}" class="recipe-image" loading="lazy">
-                    </div>
-                {{ end }}
-                <div class="recipe-content">
-                    <h2 class="recipe-title">{{ .Title }}</h2>
-                    {{ if .Description }}
-                        <p class="recipe-description">{{ .Description }}</p>
+    <!-- Featured Recipes Section -->
+    {{ $featured := where (where .Site.RegularPages "Section" "recipes") ".Params.featured" true }}
+    {{ if $featured }}
+    <section style="margin-bottom: 4rem;">
+        <h2 style="font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">Featured Recipes</h2>
+        <div class="recipe-grid">
+            {{ range first 4 $featured }}
+            <article class="recipe-card">
+                <a href="{{ .Permalink }}" class="recipe-link">
+                    {{ with .Resources.GetMatch "*.{jpg,jpeg,png,gif,webp}" }}
+                        <div class="recipe-image-wrapper">
+                            <img src="{{ .Permalink }}" alt="{{ $.Title }}" class="recipe-image" loading="lazy">
+                        </div>
                     {{ end }}
-                    <div class="recipe-meta">
-                        <time datetime="{{ .Date.Format "2006-01-02" }}" class="recipe-date">
-                            {{ .Date.Format "January 2, 2006" }}
-                        </time>
+                    <div class="recipe-content">
+                        <h2 class="recipe-title">{{ .Title }}</h2>
+                        {{ if .Description }}
+                            <p class="recipe-description">{{ .Description }}</p>
+                        {{ end }}
+                        <div class="recipe-meta">
+                            {{ with .Params.cuisines }}
+                                <span class="tag">{{ delimit . ", " }}</span>
+                            {{ end }}
+                            {{ with .Params.difficulty }}
+                                <span class="tag difficulty">{{ delimit . ", " }}</span>
+                            {{ end }}
+                        </div>
                     </div>
-                </div>
-            </a>
-        </article>
-        {{ end }}
-    </div>
+                </a>
+            </article>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- All Recipes Section -->
+    <section>
+        <h2 style="font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">All Recipes</h2>
+        <div class="recipe-grid">
+            {{ range where .Site.RegularPages "Section" "recipes" }}
+            <article class="recipe-card">
+                <a href="{{ .Permalink }}" class="recipe-link">
+                    {{ with .Resources.GetMatch "*.{jpg,jpeg,png,gif,webp}" }}
+                        <div class="recipe-image-wrapper">
+                            <img src="{{ .Permalink }}" alt="{{ $.Title }}" class="recipe-image" loading="lazy">
+                        </div>
+                    {{ end }}
+                    <div class="recipe-content">
+                        <h2 class="recipe-title">{{ .Title }}</h2>
+                        {{ if .Description }}
+                            <p class="recipe-description">{{ .Description }}</p>
+                        {{ end }}
+                        <div class="recipe-meta">
+                            <time datetime="{{ .Date.Format "2006-01-02" }}" class="recipe-date">
+                                {{ .Date.Format "January 2, 2006" }}
+                            </time>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {{ end }}
+        </div>
+    </section>
 </div>
+
+<style>
+.tag {
+    display: inline-block;
+    background: #e0e0e0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tag.difficulty {
+    background: #ffd700;
+}
+</style>
 {{ end }}

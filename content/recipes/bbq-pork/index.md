@@ -2,6 +2,10 @@
 title: "Quick & Easy Double-Marinated BBQ Pork (Char Siu)"
 date: 2025-12-03
 description: "A quick route to sticky, savory, and tender Chinese BBQ pork, using commercial sauces for an authentic flavor."
+categories: ["Main Course", "BBQ"]
+cuisines: ["Chinese"]
+difficulty: ["Easy"]
+featured: true
 resources:
   - src: bbq-pork-1.jpeg
     params:

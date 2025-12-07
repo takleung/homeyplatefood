@@ -1,0 +1,103 @@
+{{ define "main" }}
+<div class="container">
+    <div class="hero">
+        <h1 class="hero-title">{{ .Title }}</h1>
+        <p class="hero-description">{{ .Description }}</p>
+    </div>
+
+    <div class="search-container" style="max-width: 800px; margin: 2rem auto;">
+        <input type="text" id="search-input" placeholder="Search recipes by name, ingredients, cuisine..."
+               style="width: 100%; padding: 1rem; font-size: 1.1rem; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 2rem;">
+
+        <div id="search-results" class="recipe-grid"></div>
+        <div id="no-results" style="display: none; text-align: center; padding: 3rem; color: #666;">
+            <p style="font-size: 1.2rem;">No recipes found matching your search.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get all recipes data
+    const recipes = [
+        {{ range where .Site.RegularPages "Section" "recipes" }}
+        {
+            title: {{ .Title | jsonify }},
+            description: {{ .Description | jsonify }},
+            url: {{ .Permalink | jsonify }},
+            categories: {{ .Params.categories | jsonify }},
+            cuisines: {{ .Params.cuisines | jsonify }},
+            difficulty: {{ .Params.difficulty | jsonify }},
+            content: {{ .Plain | jsonify }}
+        },
+        {{ end }}
+    ];
+
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const noResults = document.getElementById('no-results');
+
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Search function
+    function performSearch(query) {
+        const searchTerm = query.toLowerCase().trim();
+
+        if (!searchTerm) {
+            searchResults.innerHTML = '';
+            noResults.style.display = 'none';
+            return;
+        }
+
+        const results = recipes.filter(recipe => {
+            return recipe.title.toLowerCase().includes(searchTerm) ||
+                   recipe.description.toLowerCase().includes(searchTerm) ||
+                   recipe.content.toLowerCase().includes(searchTerm) ||
+                   (recipe.categories && recipe.categories.some(cat => cat.toLowerCase().includes(searchTerm))) ||
+                   (recipe.cuisines && recipe.cuisines.some(cuisine => cuisine.toLowerCase().includes(searchTerm)));
+        });
+
+        if (results.length === 0) {
+            searchResults.innerHTML = '';
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+            searchResults.innerHTML = results.map(recipe => `
+                <article class="recipe-card">
+                    <a href="${recipe.url}" class="recipe-link">
+                        <div class="recipe-content">
+                            <h2 class="recipe-title">${recipe.title}</h2>
+                            <p class="recipe-description">${recipe.description}</p>
+                            ${recipe.cuisines ? `<div class="recipe-meta"><span class="tag">${recipe.cuisines.join(', ')}</span></div>` : ''}
+                        </div>
+                    </a>
+                </article>
+            `).join('');
+        }
+    }
+
+    // Add event listener with debounce
+    searchInput.addEventListener('input', debounce((e) => {
+        performSearch(e.target.value);
+    }, 300));
+</script>
+
+<style>
+.search-container .tag {
+    background: #e0e0e0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+</style>
+{{ end }}
